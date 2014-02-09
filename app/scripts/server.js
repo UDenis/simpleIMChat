@@ -2,6 +2,7 @@
 
   function Server() {
     this.clients = [];
+    this.idPropName = Math.random();
   };
 
   Server.prototype = new IM.Service();
@@ -12,20 +13,27 @@
       onMessage;
 
     onConnect = function(event, data) {
+      var source = event.source;
       this.clients.push({
-        source: event.source,
+        source: source,
         name: ""
       });
-      return "URA";
+      source[this.idPropName] = this.clients.length - 1;
     };
 
     onJoin = function(event, data) {
-
+      var source = event.source;
+      this.clients[source[this.idPropName]].name = data.name;
     };
 
     onMessage = function(event, data) {
-
-    }
+      var clients = [];
+      IM.Array.each(this.clients, function(i, cl) {
+        if (cl != event.source)
+          clients.push(cl);
+      });
+      this._sendMsg(data.message, clients);
+    };
 
     return {
       connect: onConnect,
