@@ -33,16 +33,11 @@
                     <h5 class='text-muted'>
                         Лог:
                     </h5>
-                    <table class='table log-table'>
-                        <tbody> 
-                                <tr class="success">    
-                                    <td> 
-                                        Лог сообщение 1
-                                    </td>
-                                </tr>
-                                <tr class="info">
-                                    <td> 
-                                        Лог сообщение 2
+                    <table class='table log-table' id='logTable'>
+                        <tbody data-bind="foreach : logs"> 
+                                <tr  data-bind='css : cssClass'>    
+                                    <td data-bind='text:text'> 
+
                                     </td>
                                 </tr>
                         </tbody> 
@@ -60,6 +55,7 @@
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/jquery.js"></script>
+        <script src="bower_components/knockout/knockout.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -77,8 +73,14 @@
         <script src="bower_components/bootstrap/js/collapse.js"></script>
         <script src="bower_components/bootstrap/js/tab.js"></script>
         <!-- endbuild -->
-
+        <script type="text/javascript">
+            window.IM = {};
+        </script>
         <!-- build:js({app,.tmp}) scripts/main.js -->
+        <script src="scripts/util.js"></script>
+        <script src="scripts/transport.js"></script>
+        <script src="scripts/service.js"></script>
+        <script src="scripts/server.js"></script>
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 </body>

@@ -19,10 +19,12 @@
     </head>
     <body class='fill'>
         
-        <div class="container fill">
+        <div class="container fill" id="chat">
             <div class="row chat-msgs jumbotron">
                 <div class="col-md-12">
-                    
+                    <div data-bind="foreach : messages">
+                        <div data-bind='text:message'></div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -36,6 +38,7 @@
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/jquery.js"></script>
+        <script src="bower_components/knockout/knockout.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -54,8 +57,15 @@
         <script src="bower_components/bootstrap/js/tab.js"></script>
         <!-- endbuild -->
 
+        <script type="text/javascript">
+            window.IM = {};
+        </script>
         <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+        <script src="scripts/util.js"></script>
+        <script src="scripts/transport.js"></script>
+        <script src="scripts/service.js"></script>
+        <script src="scripts/client.js"></script>
+        <script src="scripts/chat.js"></script>
+        
 </body>
 </html>
