@@ -105,7 +105,7 @@
     this.isNotJoined = ko.computed(function() {
       return !this.isJoined();
     }, this);
-  }
+  };
 
   ClientViewModel.prototype.addMessage = function(data) {
     var date = data.time || new Date();
@@ -113,6 +113,7 @@
     data.message = this.formatMsg(data.message);
 
     this.messages.push(data);
+
     if (chatMsgsList.children.length > 0) {
       chatMsgsList.children[chatMsgsList.children.length - 1].scrollIntoView(true);
     }
@@ -122,6 +123,7 @@
     return this.formatSmiles(this.formatNames(msg));
   };
 
+  // коды смайлов преобразуем в смайлики
   ClientViewModel.prototype.formatSmiles = function(msg) {
     var smiles = this.smileCodes,
       regexStr = "",
@@ -144,6 +146,7 @@
     return msg;
   };
 
+  // Встречающиеся именя выделяем жирным
   ClientViewModel.prototype.formatNames = function(msg) {
 
     if (!client.users.length)
@@ -193,15 +196,6 @@
   clientViewModel = new ClientViewModel();
   client.init();
   client.connect(serverUrl);
-
-  client.getHistory().messages.forEach(function(data) {
-    clientViewModel.addMessage({
-      message: data.message,
-      name: data.from,
-      time: new Date(data.time),
-      cssClass: 'text-primary'
-    });
-  });
 
   client.on('message', function(ev, data) {
     clientViewModel.addMessage({

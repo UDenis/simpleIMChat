@@ -2,11 +2,11 @@
 
   window.IM.isFunction = function(value) {
     return typeof value === 'function';
-  }
+  };
 
   window.IM.isString = function(value) {
     return typeof value === 'string';
-  }
+  };
 
   window.IM.Array = {
 
@@ -22,6 +22,6 @@
         }
       }
     },
-  }
+  };
 
 })(window);

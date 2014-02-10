@@ -11,7 +11,7 @@
     this.getTransporter().onMessage(function(event) {
       var method = event.data.method;
       onMessageHandlers[method] && onMessageHandlers[method].call(self, event, event.data.data);
-      self._publish(method, event, event.data.data)
+      self._publish(method, event, event.data.data);
     });
   };
 
@@ -23,6 +23,7 @@
     throw "getMessageHandlers is abstract";
   };
 
+  // subscribe to event
   Service.prototype.on = function(type, fn) {
     var self = this;
     this._subscribers[type] = this._subscribers[type] || [];
@@ -35,6 +36,7 @@
     }
   };
 
+  // unsubscribe
   Service.prototype.off = function(callBackOrEventName, callback) {
     var eventName,
       _subscribers;
@@ -58,6 +60,7 @@
     }
   };
 
+  //publish event
   Service.prototype._publish = function(type, ev, data) {
     var _subscribers = this._subscribers[type] || [],
       length = _subscribers.length,

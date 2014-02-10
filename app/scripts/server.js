@@ -2,6 +2,7 @@
 
   function Server() {
     this.clients = [];
+    this.messagesStorageName = 'IM.Messages';
   };
 
   Server.prototype = new IM.Service();
@@ -27,6 +28,7 @@
       client = this.clients.filter(function(cl) {
         return cl.source === source;
       });
+
       client[0] && (client[0].name = data.name);
 
       this.getTransporter().send({
@@ -49,8 +51,6 @@
           }
         }, cl.source);
       });
-
-
     };
 
     onMessage = function(event, data) {
@@ -59,6 +59,12 @@
         i = 0;
 
       this._sendMsg(data.message, this.getClient(event.source), this.filteredClients(event.source));
+
+      this.storageMsg({
+        message: data.message,
+        from: data.name,
+        time: new Date()
+      });
     };
 
     return {
@@ -67,6 +73,19 @@
       message: onMessage
     }
   };
+
+  Server.prototype.storageMsg = function(data) {
+    messagesStorage = this.getHistory();
+    messagesStorage.messages.push(data);
+    sessionStorage.setItem(this.messagesStorageName, JSON.stringify(messagesStorage));
+  };
+
+  Server.prototype.getHistory = function() {
+    messagesStorage = JSON.parse(sessionStorage.getItem(this.messagesStorageName) || null);
+    messagesStorage = messagesStorage || {};
+    messagesStorage.messages = messagesStorage.messages || [];
+    return messagesStorage;
+  }
 
   Server.prototype._sendMsg = function(msg, from, clients) {
     var self = this;
