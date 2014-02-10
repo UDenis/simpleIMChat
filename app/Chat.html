@@ -1,4 +1,5 @@
 <!doctype html>
+
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -17,24 +18,38 @@
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
     </head>
-    <body class='fill'>
+    <body >
         
-        <div class="container fill" id="chat">
-            <div class="row chat-msgs jumbotron">
+        <div class="container " id="chat">
+            <div class="row chat-msgs padding5" >
                 <div class="col-md-12">
-                    <div data-bind="foreach : messages">
-                        <div data-bind='text:message'></div>
+                    <div id='chatMsgsList' data-bind="foreach : messages">
+                        <div data-bind='css:cssClass'>
+                            [<span data-bind="text:time"></span>]
+                            <span data-bind="text:name"></span> :
+                            <span data-bind="html:message"></span>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-5">
-                    <input type='text' class="form-control" ></input>
+            <div class="row" data-bind='visible:isJoined()'>
+                <div class="col-md-12">
+                    <textarea class="form-control" rows="3" data-bind='value: message'></textarea>
                 </div>
-                <div class="col-md-5">
-                    <button type="button" class="btn btn-default">Отправить</button>
+                 <div class="padding5">
+                    <button type="button" class="btn btn-primary pull-right" data-bind='click:sendMsg'>Отправить</button>
                 </div>
             </div>
+             <div class="row" data-bind='visible:isNotJoined()'>
+                <div class="col-md-12">
+                    <input type='text' class="form-control" rows="3" data-bind='value: name'></input>
+                </div>
+                 <div class="padding5">
+                    <button type="button" class="btn center-block btn-primary" data-bind='click:join'>Присоедениться</button>
+                </div>
+            </div>
+            
         </div>
 
 

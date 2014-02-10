@@ -4,28 +4,35 @@
     serverView;
 
   serverView = {
-    logs: ko.observableArray()
+    logs: ko.observableArray(),
+
+    addLog: function(data) {
+      var date = new Date();
+      data.time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      this.logs.splice(0, 0, data);
+    }
   };
 
   server.init();
 
   server.on("connect", function() {
-    serverView.logs.push({
+    serverView.addLog({
       text: "Соеденился участник",
       cssClass: "success"
     });
   });
 
   server.on("join", function(ev, data) {
-    serverView.logs.push({
+    serverView.addLog({
       text: "Участник назвался как " + data.name,
       cssClass: "success"
     });
   });
 
   server.on("message", function(ev, data) {
-    serverView.logs.push({
-      text: "Пришло сообщени",
+    var client = server.getClient(ev.source);
+    serverView.addLog({
+      text: client.name + " пишет:" + data.message,
       cssClass: ""
     });
   });

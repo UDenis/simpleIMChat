@@ -22,14 +22,6 @@
         }
       }
     },
-
-    each: function(array, callback) {
-      var length = array.length,
-        i = 0;
-      for (; i < length; i++) {
-        callback(i, array[i], array);
-      };
-    }
   }
 
 })(window);

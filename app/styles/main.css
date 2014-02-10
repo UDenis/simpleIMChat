@@ -57,8 +57,14 @@
     height: 100%;
 }
 
+.chat-frame {
+ height: 450px;   
+}
+
 .log-table {
     font-size: 85%;
+    overflow-y: scroll;
+    max-height: 500px;
 }
 
 .chat-container
@@ -67,6 +73,45 @@
 }
 
 .chat-msgs{
-    height: 290px;
+     overflow-y: scroll;
+    height: 300px;
 }
+
+.padding5{
+    padding: 5px;
+}
+
+.smileicon {
+    background: url(smiles.png) no-repeat;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 1px;
+    margin-right: 5px;
+    border:none;
+    display: inline-block;
+}
+
+.smileicon.smile {
+    background-position: 0px 0px;
+}
+
+.smileicon.sad {
+    background-position: -20px 0px;
+}
+
+.smileicon.laugh {
+    background-position: -60px 0px;
+}
+
+.smileicon.wink {
+    background-position: -100px 0px;
+}
+
+.smileicon.speechless {
+    background-position: 0px -20px;
+}
+
+
+
 

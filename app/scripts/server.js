@@ -2,7 +2,6 @@
 
   function Server() {
     this.clients = [];
-    this.idPropName = Math.random();
   };
 
   Server.prototype = new IM.Service();
@@ -18,42 +17,92 @@
         source: source,
         name: ""
       });
-      source[this.idPropName] = this.clients.length - 1;
     };
 
     onJoin = function(event, data) {
-      var source = event.source;
-      this.clients[source[this.idPropName]].name = data.name;
+      var source = event.source,
+        self = this,
+        client;
+
+      client = this.clients.filter(function(cl) {
+        return cl.source === source;
+      });
+      client[0] && (client[0].name = data.name);
+
+      this.getTransporter().send({
+        method: "initdata",
+        data: {
+          users: this.clients.filter(function(u) {
+            return !!u.name;
+          }).map(function(u) {
+            return u.name;
+          })
+        }
+      }, source);
+
+
+      this.filteredClients(event.source).forEach(function(cl) {
+        self.getTransporter().send({
+          method: "joined",
+          data: {
+            user: data.name
+          }
+        }, cl.source);
+      });
+
+
     };
 
     onMessage = function(event, data) {
-      var clients = [];
-      IM.Array.each(this.clients, function(i, cl) {
-        if (cl != event.source)
-          clients.push(cl);
-      });
-      this._sendMsg(data.message, clients);
+      var source = event.source,
+        length = this.clients.length,
+        i = 0;
+
+      this._sendMsg(data.message, this.getClient(event.source), this.filteredClients(event.source));
     };
 
     return {
       connect: onConnect,
       join: onJoin,
-      onMessage: onMessage
+      message: onMessage
     }
   };
 
-  Server.prototype._sendMsg = function(msg, clients) {
+  Server.prototype._sendMsg = function(msg, from, clients) {
     var self = this;
 
     clients = clients || this.clients;
-    IM.Array.each(clients, function(i, client) {
+    clients.forEach(function(client) {
       self.getTransporter().send({
         method: "message",
         data: {
-          message: msg
+          message: msg,
+          name: from.name,
         }
-      }, client);
+      }, client.source);
     });
+  };
+
+  Server.prototype.getClient = function(source) {
+    var i = 0,
+      length = this.clients.length;
+    for (; i < length; i++) {
+      if (this.clients[i].source === source)
+        return this.clients[i];
+    };
+  };
+
+  Server.prototype.filteredClients = function(source) {
+    var i = 0,
+      length = this.clients.length,
+      clients = [];
+
+    for (; i < length; i++) {
+      if (this.clients[i].source !== source)
+        clients.push(this.clients[i]);
+    };
+
+    return clients;
   };
 
   window.IM.Server = Server;

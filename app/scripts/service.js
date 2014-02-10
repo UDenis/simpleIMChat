@@ -63,7 +63,7 @@
       length = _subscribers.length,
       i = 0;
 
-    IM.Array.each(_subscribers, function(i, handler) {
+    _subscribers.forEach(function(handler) {
       handler(ev, data);
     });
   };
