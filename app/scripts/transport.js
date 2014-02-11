@@ -15,10 +15,11 @@
   function Transport() {};
 
   Transport.prototype.send = function(data, address) {
-    if (IM.isString(address))
+    if (IM.isString(address)) {
       return window.parent.postMessage(data, address);
-    else
+    } else {
       return address.postMessage(data, "*");
+    }
   };
 
   Transport.prototype.onMessage = function(callback) {

@@ -2,8 +2,8 @@
 
 
   function Client() {
+    // все кто есть в чате
     this.users = [];
-    this.messagesStorageName = 'IM.Messages';
   };
 
   Client.prototype = new IM.Service();

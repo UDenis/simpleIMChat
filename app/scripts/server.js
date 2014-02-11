@@ -1,7 +1,10 @@
 (function(window) {
 
   function Server() {
+    // список подключенных
     this.clients = [];
+
+    // ключ для сохранения сообщений в SessionStorage
     this.messagesStorageName = 'IM.Messages';
   };
 
@@ -31,6 +34,10 @@
 
       client[0] && (client[0].name = data.name);
 
+      /*
+      отсылаем обратно инфу для чата,
+      какие пользователи сейчас в чате
+      */
       this.getTransporter().send({
         method: "initdata",
         data: {
@@ -42,7 +49,10 @@
         }
       }, source);
 
-
+      /*
+      всем остальным отправляем сообщение,
+      что у нас новый участник
+      */
       this.filteredClients(event.source).forEach(function(cl) {
         self.getTransporter().send({
           method: "joined",
@@ -58,8 +68,10 @@
         length = this.clients.length,
         i = 0;
 
+      // отсылаем всем участникам что есть новое сообщение
       this._sendMsg(data.message, this.getClient(event.source), this.filteredClients(event.source));
 
+      // сохраняем в SessionStorage
       this.storageMsg({
         message: data.message,
         from: data.name,
@@ -102,6 +114,7 @@
     });
   };
 
+  // получает клиента по его source
   Server.prototype.getClient = function(source) {
     var i = 0,
       length = this.clients.length;
@@ -111,6 +124,7 @@
     };
   };
 
+  // получает всех клиентов за исключением клиента source
   Server.prototype.filteredClients = function(source) {
     var i = 0,
       length = this.clients.length,

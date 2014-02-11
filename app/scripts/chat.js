@@ -7,6 +7,7 @@
 
   try {
     serverUrl = parent.location.origin || '*';
+    serverUrl = serverUrl === 'null' ? "*" : serverUrl;
   } catch (ex) {
     serverUrl = '*';
   }
