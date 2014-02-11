@@ -1,13 +1,12 @@
 <!doctype html>
-
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js fill"> <!--<![endif]-->
-    <head >
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Chat</title>
+        <title>simpleIMChat</title>
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
@@ -15,41 +14,46 @@
         <!-- endbower -->
         <!-- endbuild -->
         <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/main.css"> 
         <!-- endbuild -->
     </head>
-    <body >
-        
-        <div class="container " id="chat">
-            <div class="row chat-msgs padding5" >
-                <div class="col-md-12">
-                    <div id='chatMsgsList' data-bind="foreach : messages">
-                        <div data-bind='css:cssClass'>
-                            [<span data-bind="text:time"></span>]
-                            <span data-bind="text:name"></span> :
-                            <span data-bind="html:message"></span>
-                        </div>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h3 class="text-info text-center">Реализация IM клиента</h3>
+            </div>
 
+            <div class="row">
+                <div class="col-md-4 chat-container">
+                    <h4 class="text-muted text-center">Клиент 1</h4>
+                    <iframe src="Chat.html?v=1" class='fill chat-frame' ></iframe>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-muted text-center">Имитация сервера</h4>
+                    <h5 class='text-muted'>
+                        Лог:
+                    </h5>
+                    <div class='log-table'>
+                        <table class='table' id='logTable'>
+                            <tbody data-bind="foreach : logs"> 
+                                    <tr  data-bind='css : cssClass'>    
+                                        <td data-bind='text:text'> 
+
+                                        </td>
+                                        <td data-bind='text:time'> 
+
+                                        </td>
+                                    </tr>
+                            </tbody> 
+                        </table>
                     </div>
                 </div>
-            </div>
-            <div class="row" data-bind='visible:isJoined()'>
-                <div class="col-md-12">
-                    <textarea class="form-control" rows="3" data-bind='value: message' placeholder='Введите сообщение'></textarea>
-                </div>
-                 <div class="padding5">
-                    <button type="button" class="btn btn-primary pull-right" data-bind='click:sendMsg'>Отправить</button>
+                <div class="col-md-4 chat-container">
+                    <h4 class="text-muted text-center">Клиент 2</h4>
+                    <iframe src="Chat.html" class='fill chat-frame' ></iframe>
                 </div>
             </div>
-             <div class="row" data-bind='visible:isNotJoined()'>
-                <div class="col-md-12">
-                    <input type='text' class="form-control" rows="3" data-bind='value: name' placeholder='Введите имя'></input>
-                </div>
-                 <div class="padding5">
-                    <button type="button" class="btn center-block btn-primary" data-bind='click:join'>Присоедениться</button>
-                </div>
-            </div>
-            
+
         </div>
 
 
@@ -74,7 +78,6 @@
         <script src="bower_components/bootstrap/js/collapse.js"></script>
         <script src="bower_components/bootstrap/js/tab.js"></script>
         <!-- endbuild -->
-
         <script type="text/javascript">
             window.IM = {};
         </script>
@@ -82,8 +85,8 @@
         <script src="scripts/util.js"></script>
         <script src="scripts/transport.js"></script>
         <script src="scripts/service.js"></script>
-        <script src="scripts/client.js"></script>
-        <script src="scripts/chat.js"></script>
-        
+        <script src="scripts/server.js"></script>
+        <script src="scripts/main.js"></script>
+        <!-- endbuild -->
 </body>
 </html>

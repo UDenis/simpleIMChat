@@ -35,7 +35,7 @@
             </div>
             <div class="row" data-bind='visible:isJoined()'>
                 <div class="col-md-12">
-                    <textarea class="form-control" rows="3" data-bind='value: message' placeholder='Введите сообщение'></textarea>
+                    <textarea class="form-control" rows="3" data-bind='value: message'></textarea>
                 </div>
                  <div class="padding5">
                     <button type="button" class="btn btn-primary pull-right" data-bind='click:sendMsg'>Отправить</button>
@@ -43,7 +43,7 @@
             </div>
              <div class="row" data-bind='visible:isNotJoined()'>
                 <div class="col-md-12">
-                    <input type='text' class="form-control" rows="3" data-bind='value: name' placeholder='Введите имя'></input>
+                    <input type='text' class="form-control" rows="3" data-bind='value: name'></input>
                 </div>
                  <div class="padding5">
                     <button type="button" class="btn center-block btn-primary" data-bind='click:join'>Присоедениться</button>
